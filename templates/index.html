@@ -16,7 +16,6 @@
         <!-- begin scripts -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-        <script src="tablesaw/tablesaw.js"></script>
         <!-- end scripts -->
     </head>
 
@@ -27,11 +26,13 @@
 
         <div id="data"></div>
 
+        <script src="pym.js"></script>
+        <script src="tablesaw/tablesaw.js"></script>
         <script src="tabletop.js"></script>
         <script src="responsiveTable.js"></script>
         <script type="text/javascript">
           (function() {
-            new ResponsiveTable('{{ key }}', {{ columns }});
+            var reponsive_table = new ResponsiveTable('{{ key }}', {{ columns }});
 
             var inIframe = function() {
               try {

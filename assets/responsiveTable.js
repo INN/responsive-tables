@@ -9,6 +9,7 @@ var ResponsiveTable;
     self.columns = columns;
 
     self.init = function(dataSpreadsheet) {
+      self.pym = new pym.Child({ polling: 500 });
       self.ttop = Tabletop.init({
           key: dataSpreadsheet,
           callback: self.writeTable,
@@ -32,6 +33,7 @@ var ResponsiveTable;
         self.createTableColumns('#data table');
         self.populateTable(dataSource, '#data table');
         $('#data table').table();
+        self.pym.sendHeightToParent();
     };
 
     self.createTableColumns = function(table){
