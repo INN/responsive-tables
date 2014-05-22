@@ -60,5 +60,5 @@ Be sure and replace `http://yourdomain.com/path/to/index.html` with the actual U
 
 ## Libraries used
 
-This little project uses [tabletop](https://github.com/jsoma/tabletop) and [tablesaw](https://github.com/filamentgroup/tablesaw/). Check them out!
+This little project uses [pym.js](http://blog.apps.npr.org/pym.js/), [tabletop](https://github.com/jsoma/tabletop) and [tablesaw](https://github.com/filamentgroup/tablesaw/). Check them out!
 
