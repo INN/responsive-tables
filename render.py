@@ -4,6 +4,7 @@ import json
 import shutil
 import os
 import re
+import argparse
 
 pwd = os.path.abspath(os.path.dirname(__file__))
 
@@ -22,22 +23,28 @@ def copy_and_overwrite(from_path, to_path):
     shutil.copytree(from_path, to_path)
 
 
-def main():
+def main(config=None):
     """
     Reads config.json and generates a build directory with
     a deployable copy of a responsive table based on your
     Google Drive spreadsheet.
     """
     try:
-        with open('config.json', 'r') as f:
+        if config:
+            config_file = pwd + '/configs/' + config + '.json'
+        else:
+            config_file = 'config.json'
+
+        with open(config_file, 'r') as f:
             config = json.loads(f.read())
 
             copy_and_overwrite(pwd + '/assets/', pwd + '/build/')
 
             rendered = render('index.html', {
+                    'ua_code': config['ua_code'],
                     'title': config['title'],
                     'key': config['key'],
-                    'columns': json.dumps(config['columns'])
+                    'columns': json.dumps(config['columns']),
                 })
 
             if not os.path.exists(pwd + '/build'):
@@ -53,4 +60,15 @@ def main():
     print "Done!"
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(
+        description='Reads config.json and generates a build directory with'
+            'a deployable copy of a responsive table based on your'
+            'Google Drive spreadsheet.')
+
+    parser.add_argument(
+        '-c', '--config', dest='config', type=str,
+        help='Specify the slug of a config file stored in the configs directory (e.g. ./render.py -c discounts)')
+
+    parser.set_defaults(**{ 'config': None })
+    args = parser.parse_args()
+    main(config=args.config)
