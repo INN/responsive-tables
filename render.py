@@ -35,6 +35,7 @@ def main():
             copy_and_overwrite(pwd + '/assets/', pwd + '/build/')
 
             rendered = render('index.html', {
+                    'title': config['title'],
                     'key': config['key'],
                     'columns': json.dumps(config['columns'])
                 })
