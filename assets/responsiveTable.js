@@ -71,7 +71,7 @@ var ResponsiveTable;
             if (val.match) {
               var matches = val.match(/(https?:\/\/)([\dA-Za-z\.-]+)\.([A-Za-z\.]{2,6})([\/\w \.-]*)*\/?(\?.*)?(\#.*)?/g);
               if (matches) {
-                var replacement = '<a class="ellipsis-link" href="' + matches[0] + '">' + matches[0] + '</a>';
+                var replacement = '<a target="_blank" class="ellipsis-link" href="' + matches[0] + '">' + matches[0] + '</a>';
                 val = val.replace(matches[0], replacement);
               }
             }
