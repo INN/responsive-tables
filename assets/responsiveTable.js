@@ -29,10 +29,10 @@ var ResponsiveTable;
 
     self.writeTable = function(dataSource){
         dataSource = self.sortData(dataSource);
-        $('#data').html('<table class="tablesaw" id="data-table-container" data-sortable></table>');
+        $('#data').html('<table style="display:none;" class="tablesaw" id="data-table-container" data-sortable></table>');
         self.createTableColumns('#data table');
         self.populateTable(dataSource, '#data table');
-        $('#data table').table();
+        $('#data table').table().fadeIn();
         self.pym.sendHeightToParent();
     };
 
