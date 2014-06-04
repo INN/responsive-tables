@@ -12,7 +12,13 @@ It works best with tables that have 5-7 columns.
 
 Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key.
 
+Fill in `title` to set the table's title tag.
+
+Fill in `ua_code` to enable Google Analytics.
+
     {
+        "ua_code": "googleanalyticsuacodegoeshere",
+        "title": "Title tag",
         "key": "yourspreadsheetkeygoeshere",
     ...
 
