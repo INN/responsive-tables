@@ -46,6 +46,15 @@ Once you've filled in `config.json`, run:
 
 This will create a build directory and place a copy of your rendered table and all assets inside it. You can deploy the contents of this directory to your host as-is.
 
+
+### Multiple configurations
+
+As a convenience, you can create config files and store them in the `configs` directory to ease re-rendering of tables.
+
+For example, if you create a config file named `myspecialtable.json`, then you can tell `render.py` to render that specific configuration like so:
+
+    ./render.py -c myspecialtable
+
 ## Embedding the table
 
 We're using [pym.js](http://blog.apps.npr.org/pym.js/) to make our tables responsive when embedded via iframe.
