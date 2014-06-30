@@ -18,7 +18,7 @@ Start by downloading this repository [as a .zip](https://github.com/INN/responsi
 
 ### Configuration
 
-Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long string, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0` in https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. 
+Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long sequence of apparently-random characters, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0`, found in the URL of the page you use to edit the spreadsheet. An example URL is  https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. The key is also included in the URL found in the "Document link" field of the [Publish to web](https://support.google.com/docs/answer/183965/?hl=en&authuser=0) dialog. 
 
 Fill in `title` to set the table's title tag.
 
@@ -89,13 +89,13 @@ To embed a table, you can use this snippet to get started:
     }());
     </script>
 
-Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table.
+Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table, and to replace `http://yourdomain.com/path/to/pym.js` with the location of the `pym.js` file on your site.
 
 ## Troubleshooting
 
 **Data in wrong column**:
 
-Are the simplified labels in your `config.json` entirely lowercase and without capitals or underscores?
+Are the simplified labels in your `config.json` composed only of lowercase letters, numbers, and dashes?
 
 **No data shows**:
 
