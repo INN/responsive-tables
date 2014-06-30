@@ -18,7 +18,7 @@ Start by downloading this repository [as a .zip](https://github.com/INN/responsi
 
 ### Configuration
 
-Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key.
+Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long string, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0` in https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. 
 
 Fill in `title` to set the table's title tag.
 
