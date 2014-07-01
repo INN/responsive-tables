@@ -2,7 +2,7 @@
 
 ## What is it?
 
-A simple `render.py` script that reads from `config.json` to find your Google Drive spreadsheet key and column formatting information then generates a `build` directory with a ready-for-deployment responsive table and all required assets.
+A simple webapp that takes user input to find your Google Drive spreadsheet key and column formatting information, then generates a .zip with a ready-for-deployment responsive table and all required assets.
 
 It works best with tables that have 5-7 columns.
 
@@ -10,11 +10,6 @@ It works best with tables that have 5-7 columns.
 
 ### Setup
 
-You'll need [Jinja2](http://jinja.pocoo.org/) and Python for this project.
-
-    sudo easy_install pip
-    pip install -r requirements.txt
-    
 Install this repository:
 
     git clone https://github.com/INN/responsive-tables.git
@@ -51,27 +46,9 @@ Next, define the columns to display in your table. For example:
 
 Each item in the `columns` array follows the format `["simplifiedlabel", "Label for display"]`. Simplified labels are the column headings in your document with spaces and underscores removed, and uppercase letters made lowercase. Allowed characters are lowercase a-z, numbers, and the `-` character. 
 
-### Render
-
-Once you've filled in `config.json`, run:
-
-    ./render.py
-
-This will create a build directory and place a copy of your rendered table and all assets inside it. You can deploy the contents of this directory to your host as-is.
-    
-If the project renders successfully but you have a blank page, make sure your document is [published](https://support.google.com/docs/answer/183965?rd=1&authuser=0) and that permissions allow anyone with the link to view the document. 
-
-### Multiple configurations
-
-As a convenience, you can create config files and store them in the `configs` directory to ease re-rendering of tables.
-
-For example, if you create a config file named `myspecialtable.json`, then you can tell `render.py` to render that specific configuration like so:
-
-    ./render.py -c myspecialtable
-
 ## Deploying to server
 
-Copy the contents of the `build` directory to a directory on your website.
+Copy the contents of the `build` zip to a directory on your website.
 
 ## Embedding the table
 
@@ -101,18 +78,14 @@ Are the simplified labels in your `config.json` composed only of lowercase lette
 
 Is your spreadsheet [published](https://support.google.com/docs/answer/183965?rd=1&authuser=0)?
 
-**Render fails with an error mentioning jinja2**:
-
-    Traceback (most recent call last):
-      File "./render.py", line 11, in <module>
-        from jinja2 import Environment, FileSystemLoader
-    ImportError: No module named jinja2
-
-Install [Jinja2](http://jinja.pocoo.org/docs/intro/#installation):
-
-    pip install -r requirements.txt
-
 ## Libraries used
 
-This little project uses [pym.js](http://blog.apps.npr.org/pym.js/), [tabletop](https://github.com/jsoma/tabletop), [tablesaw](https://github.com/filamentgroup/tablesaw/) and [Jinja2](http://jinja.pocoo.org/). Check them out!
+This little project uses:
+
+- [pym.js](http://blog.apps.npr.org/pym.js/), 
+- [tabletop](https://github.com/jsoma/tabletop), 
+- [tablesaw](https://github.com/filamentgroup/tablesaw/) 
+- [JSzip](https://stuk.github.io/jszip/)
+
+Check them out!
 
