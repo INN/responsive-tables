@@ -10,7 +10,12 @@ It works best with tables that have 5-7 columns.
 
 ### Setup
 
-Start by downloading this repository [as a .zip](https://github.com/INN/responsive-tables/archive/master.zip) or via git:
+You'll need [Jinja2](http://jinja.pocoo.org/) and Python for this project.
+
+    sudo easy_install pip
+    pip install -r requirements.txt
+    
+Install this repository:
 
     git clone https://github.com/INN/responsive-tables.git
 
@@ -18,7 +23,7 @@ Start by downloading this repository [as a .zip](https://github.com/INN/responsi
 
 ### Configuration
 
-Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long sequence of apparently-random characters, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0`, found in the URL of the page you use to edit the spreadsheet. An example URL is  https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. The key is also included in the URL found in the "Document link" field of the [Publish to web](https://support.google.com/docs/answer/183965/?hl=en&authuser=0) dialog. 
+Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long sequence of apparently-random characters, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0`, found in the URL of the page you use to edit the spreadsheet. An example URL is https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. The key is also included in the URL found in the "Document link" field of the [Publish to web](https://support.google.com/docs/answer/183965/?hl=en&authuser=0) dialog. 
 
 Fill in `title` to set the table's title tag.
 
@@ -53,16 +58,7 @@ Once you've filled in `config.json`, run:
     ./render.py
 
 This will create a build directory and place a copy of your rendered table and all assets inside it. You can deploy the contents of this directory to your host as-is.
-
-If you receive the following error, you do not have Jinja2 installed, which this program uses for templates.
-
-    Traceback (most recent call last):
-      File "./render.py", line 11, in <module>
-        from jinja2 import Environment, FileSystemLoader
-    ImportError: No module named jinja2
     
-[Follow these instructions](http://jinja.pocoo.org/docs/intro/#installation) to install Jinja2, a Python templating engine.
-
 If the project renders successfully but you have a blank page, make sure your document is [published](https://support.google.com/docs/answer/183965?rd=1&authuser=0) and that permissions allow anyone with the link to view the document. 
 
 ### Multiple configurations
@@ -72,6 +68,10 @@ As a convenience, you can create config files and store them in the `configs` di
 For example, if you create a config file named `myspecialtable.json`, then you can tell `render.py` to render that specific configuration like so:
 
     ./render.py -c myspecialtable
+
+## Deploying to server
+
+Copy the contents of the `build` directory to a directory on your website.
 
 ## Embedding the table
 
@@ -89,7 +89,7 @@ To embed a table, you can use this snippet to get started:
     }());
     </script>
 
-Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table, and to replace `http://yourdomain.com/path/to/pym.js` with the location of the `pym.js` file on your site.
+Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table, and to replace `http://yourdomain.com/path/to/pym.js` with the location of the `pym.js` file, found in the same directory.
 
 ## Troubleshooting
 
@@ -103,7 +103,14 @@ Is your spreadsheet [published](https://support.google.com/docs/answer/183965?rd
 
 **Render fails with an error mentioning jinja2**:
 
-Install [Jinja2](http://jinja.pocoo.org/docs/intro/#installation)
+    Traceback (most recent call last):
+      File "./render.py", line 11, in <module>
+        from jinja2 import Environment, FileSystemLoader
+    ImportError: No module named jinja2
+
+Install [Jinja2](http://jinja.pocoo.org/docs/intro/#installation):
+
+    pip install -r requirements.txt
 
 ## Libraries used
 
