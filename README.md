@@ -85,7 +85,8 @@ This little project uses:
 - [pym.js](http://blog.apps.npr.org/pym.js/), 
 - [tabletop](https://github.com/jsoma/tabletop), 
 - [tablesaw](https://github.com/filamentgroup/tablesaw/) 
-- [JSzip](https://stuk.github.io/jszip/)
+- [JSzip](https://stuk.github.io/jszip/) and [JSzip-utils](https://stuk.github.io/jszip-utils/)
+- [FileSaver.js](http://eligrey.com/blog/post/saving-generated-files-on-the-client-side)
 
 Check them out!
 

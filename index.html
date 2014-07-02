@@ -15,7 +15,7 @@
 			<nav id="sticky-nav" class="sticky-navbar navbar clearfix">
 		    <div class="container">
 		    	<div class="nav-right">
-			      <div class="donate-btn"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M7T6234BREMG2"><i class="icon-heart"></i>Donate Now</a></div> 
+			      <div class="donate-btn"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M7T6234BREMG2"><i class="icon-heart"></i>Donate</a></div> 
 					</div>
 
 		      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
@@ -52,6 +52,7 @@
 				<p>Input your project details here:</p>
 				<input id="basics-title" type="text" placeholder="Title" class="span12" >
 				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
+				<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12" value="1-7IkSWqrSu3ZQ99SSVUbkfIW5FraYk336QtDcuU3XoQ">
 				<input id="basics-ga" type="text" placeholder="Google Analytics code">
 				<div class="form-actions">
 					<button id="basics-grab" type="sumbit" class="btn btn-primary">Grab spreadsheet</button>
@@ -59,22 +60,29 @@
 				</div>
 			</form>
 			<hr>
-			<p>Name your columns: </p>
+			<h5>Name your columns: </h5>
+			<p>Input your columns' simplified name and display name in the format <code>[["simplename", "Display name"], ["anothername", "Another Name"]]</code></p>
+			<textarea id="basics-columns" rows="3" class="span12">[['word', 'Word'], ['use', 'Usage'], ['first-use', 'First use in series'], ['meaning', 'Dictionary meaning'], ['origin', 'Etymology']]</textarea>
+			
+			<!--
 			<ul id="column-list">
 				<li class="columnitem"><form class="form-inline"><input class="simplename" type="text" value="<%- simplename %>"><input class="richname" type="text" value="<%- richname %>"><button class="btn btn-danger">X</button></form></li>
 			</ul>
 			<button id="add-column" class="btn">Add Column</button>
+			-->
+			<button id="build-zip" class="btn btn-primary btn-large ">Build the zip</button>
 		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="http://backbonejs.org/backbone-min.js"></script>
 	<script src="http://underscorejs.org/underscore-min.js"></script>
 	<script src="lib/js/jszip.js"></script><!-- use .min.js when working -->
-	<script type="text/javascript" src="lib/js/jszip-utils.js"></script>
+	<script type="text/javascript" src="lib/js/jszip-utils.min.js"></script>
 	<!-- Mandatory in IE 6, 7, 8 and 9. -->
 	<!--[if IE]>
-		<script type="text/javascript" src="lib/js/jszip-utils-ie.js"></script>
+		<script type="text/javascript" src="lib/js/jszip-utils-ie.min.js"></script>
 	<![endif]-->
+	<script src="lib/js/FileSaver.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>
