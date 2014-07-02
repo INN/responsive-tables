@@ -48,4 +48,49 @@ $(document).ready(function () {
 		basics_columns = $('#basics-columns').text();
 		create_zip();
 	});
+// Responsive navigation
+	$('.navbar .toggle-nav-bar').each( function() {
+		var toggleButton = $(this);
+		var navbar = toggleButton.closest('.navbar');
+
+		// Support both touch and click events
+		toggleButton.on( 'touchstart.toggleNav', function() {
+			// If it is a touch event, get rid of the click events.
+			toggleButton.off( 'click.toggleNav' );
+			navbar.toggleClass( 'open' );
+
+			// Close all the open sub navigation upon closing the menu
+			if ( !navbar.hasClass( 'open' ) ) {
+				navbar.find( '.nav-shelf li.open' ).removeClass( 'open' );
+			}
+		});
+
+		toggleButton.on( 'click.toggleNav', function() {
+			navbar.toggleClass( 'open' );
+		});
+
+		// Secondary nav
+		navbar.on( 'touchstart.toggleNav click.toggleNav', '.nav-shelf .caret', function( event ) {
+			// Only handle when
+			if ( toggleButton.css( 'display') == 'none' ) {
+				return;
+			}
+
+			if ( event.type == 'touchstart' ) {
+				navbar.off( 'click.toggleNav', '.nav-shelf .caret' );
+			}
+
+			var li = $( event.target ).closest('li');
+
+			// Close the others if we are opening
+			if ( !li.hasClass('open') ) {
+				navbar.find( '.nav-shelf li.open' ).removeClass( 'open' );
+			}
+
+			// Open ours
+			li.toggleClass( 'open' );
+
+			event.preventDefault();
+		});
+	} );
 });
