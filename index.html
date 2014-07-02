@@ -45,20 +45,36 @@
 			</nav>
 		</div></div>
 	</div>
+	
 	<div id="page">
 		<div id="main" class="row-fluid">
-			<p>Foobar</p>
-			<input id="basics-title" type="text" placeholder="Title" class="span12">
-			<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
-			<input id="basics-ga" type="text" placeholder="Google Analytics code">
-			<div class="form-actions">
-				<button id="basics-grab" type="sumbit" class="btn btn-primary">Grab spreadsheet</button>
-				<button id="basics-clear" type="button" class="btn">Clear</button>
-			</div>
+			<form id="basics">
+				<p>Input your project details here:</p>
+				<input id="basics-title" type="text" placeholder="Title" class="span12" >
+				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
+				<input id="basics-ga" type="text" placeholder="Google Analytics code">
+				<div class="form-actions">
+					<button id="basics-grab" type="sumbit" class="btn btn-primary">Grab spreadsheet</button>
+					<button id="basics-clear" type="button" class="btn">Clear</button>
+				</div>
+			</form>
+			<hr>
+			<p>Name your columns: </p>
+			<ul id="column-list">
+				<li class="columnitem"><form class="form-inline"><input class="simplename" type="text" value="<%- simplename %>"><input class="richname" type="text" value="<%- richname %>"><button class="btn btn-danger">X</button></form></li>
+			</ul>
+			<button id="add-column" class="btn">Add Column</button>
 		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="http://backbonejs.org/backbone-min.js"></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
 	<script src="lib/js/jszip.js"></script><!-- use .min.js when working -->
+	<script type="text/javascript" src="lib/js/jszip-utils.js"></script>
+	<!-- Mandatory in IE 6, 7, 8 and 9. -->
+	<!--[if IE]>
+		<script type="text/javascript" src="lib/js/jszip-utils-ie.js"></script>
+	<![endif]-->
 	<script src="app.js"></script>
 </body>
 </html>
