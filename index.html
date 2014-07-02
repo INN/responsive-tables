@@ -48,29 +48,49 @@
 	
 	<div id="page">
 		<div id="main" class="row-fluid">
-			<form id="basics">
-				<p>Input your project details here:</p>
-				<input id="basics-title" type="text" placeholder="Title" class="span12" >
-				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
-				<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12" value="1-7IkSWqrSu3ZQ99SSVUbkfIW5FraYk336QtDcuU3XoQ">
-				<input id="basics-ga" type="text" placeholder="Google Analytics code">
-				<div class="form-actions">
-					<button id="basics-grab" type="sumbit" class="btn btn-primary">Grab spreadsheet</button>
-					<button id="basics-clear" type="button" class="btn">Clear</button>
-				</div>
-			</form>
-			<hr>
-			<h5>Name your columns: </h5>
-			<p>Input your columns' simplified name and display name in the format <code>[["simplename", "Display name"], ["anothername", "Another Name"]]</code></p>
-			<textarea id="basics-columns" rows="3" class="span12">[['word', 'Word'], ['use', 'Usage'], ['first-use', 'First use in series'], ['meaning', 'Dictionary meaning'], ['origin', 'Etymology']]</textarea>
-			
-			<!--
-			<ul id="column-list">
-				<li class="columnitem"><form class="form-inline"><input class="simplename" type="text" value="<%- simplename %>"><input class="richname" type="text" value="<%- richname %>"><button class="btn btn-danger">X</button></form></li>
-			</ul>
-			<button id="add-column" class="btn">Add Column</button>
-			-->
+			<h1>Responsive Tables</h1>
+			<p>This generates a ready-for-deployment, embeddable, responsive version of a Google Spreadsheet, from the spreadsheet key and some column formatting information.</p>
+			<p>It works best with tables that have 5-7 columns.</p>
+			<p>Input your project details here:</p>
+			<input id="basics-title" type="text" placeholder="Title" class="span12" >
+			<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
+			<p>The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </p>
+			<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12">
+			<p>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</p>
+			<input id="basics-ga" type="text" placeholder="UA-XXXXXXX-X">
+			<p>Input your columns' simplified name and display name in the format <code>[['simplename', 'Display name'], ['anothername', 'Another Name']]</code></p>
+			<textarea id="basics-columns" rows="3" class="span12" placeholder="[['simplename', 'Display name'], ['anothername', 'Another Name']]"></textarea>
+
 			<button id="build-zip" class="btn btn-primary btn-large ">Build the zip</button>
+			<hr>
+			<h3>Uploading</h3>
+			<p>It's a simple as unzipping the contents of the .zip to a directory on your website.</p>
+			<h3>Embedding the table</h3>
+			<p>We're using <a href="http://blog.apps.npr.org/pym.js/">pym.js</a> to make our tables responsive when embedded via <code>&lt;iframe&gt;</code>.</p>
+			<p>To embed a table, you can use this snipped to get started:</p>
+	<pre><code>&lt;div id="table-iframe-container"&gt;&lt;/div&gt;
+&lt;script src="http://yourdomain.com/path/to/pym.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+(function() {
+  var pymParent = new pym.Parent(
+    'table-iframe-container',
+    'http://yourdomain.com/path/to/index.html', {});
+}());
+&lt;/script&gt;</code></pre>
+			
+			<p>Be sure to replace <code>http://yourdomain.com/path/to/index.html</code> with the actual URL of your table, and to replace <code>http://yourdomain.com/path/to/pym.js</code> with the location of the pym.js file, found in the same directory.</p>
+			
+			<h3>Credits</h3>
+			
+			<p>This little project uses:</p>
+			<ul>
+				<li><a href="http://blog.apps.npr.org/pym.js/">NPR's pym.js</a>, </li>
+				<li><a href="https://github.com/jsoma/tabletop">Tabletop</a>, </li>
+				<li><a href="https://github.com/filamentgroup/tablesaw/">Tablesaw</a> </li>
+				<li><a href="https://stuk.github.io/jszip/">JSzip</a> and <a href="https://stuk.github.io/jszip-utils/">JSzip-utils</a></li>
+				<li><a href="http://eligrey.com/blog/post/saving-generated-files-on-the-client-side">FileSaver.js</a></li>
+			</ul>
+			<p>Check them out!</p>
 		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
