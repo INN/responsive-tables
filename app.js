@@ -34,11 +34,29 @@ function create_zip(index_html) {
 	});
 }
 
-function getKey() {
+function getKeyFromUrl() {
 	var toSlashes = /[/&=?#]+/gi;
 	basics_url = $('#basics-url').val().replace(toSlashes, "/").split('/');
 	basics_url.sort(function (a, b) { return b.length - a.length; });
 	return(basics_url[0]);
+}
+function getKey() {
+	if (validateKey(basics_key)) {
+		return basics_key;	
+	} else if (basics_url.length >= 44) {
+		basics_key = getKeyFromUrl();	
+		return basics_key;
+	} else {
+		alert("Invalid key or URL\nDid you put the URL in the key box?"); 
+	}
+}
+
+function showInfo(data) {
+	console.log(tabletop.models.Sheet1.column_names);
+	columns_array = tabletop.models.Sheet1.column_names.map(function(item) {return [item, '']});
+	var doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g // Matches " and any Unicode quote-like character
+	columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "'");
+	$('#basics-columns').html(columns_array); // outputs to the columns textarea
 }
 
 function validateKey(key) {
@@ -49,22 +67,47 @@ function validateKey(key) {
 	}
 }
 
+
+
 $(document).ready(function () {
+	// Loads the template, once the page has loaded
 	$.get("templates/index.html", function (data) {
 		template_html = String(data);
 	});
+	
+	// Updates basics_key and basics_url when #basics-url is updated URL
+	$('#basics-url').change(function() {
+		basics_key = getKeyFromUrl();
+		$('#basics-key').val(basics_key);
+	});
+	// Updates basics_key when #basics-key is updated
+	$('#basics-key').change(function() {
+		basics_key = $('#basics-key').val();
+	});
+	// Updates basics_ga when #basics-ga is updated
+	$('#basics-ga').change(function() {
+		basics_ga = $('#basics-ga').val();
+	});
+	// Updates basics_title when #basics-ga is updated
+	$('#basics-title').change(function() {
+		basics_title = $('#basics-title').val();
+	});
+
+	
+	// Starts tabletop, gets spreadsheet JSON
+	$('#start-tabletop').click(function() {
+		tabletop = Tabletop.init( { key: getKey(), 
+															 callback: showInfo, 
+															 debug: true, 
+															 simpleSheet: true } );
+	});
+	
+	// Builds and delivers the zip to the reader
 	$('#build-zip').click(function () {
 		foo = $('#basics-columns').val();
 		console.log(foo);
-		basics_title = $('#basics-title').val();
-		basics_url = $('#basics-url').val(); //parse this for basics_key later
-		basics_key = $('#basics-key').val(); //check for validity later
-		basics_ga = $('#basics-ga').val();
-		basics_columns = $('#basics-columns').text();
+		basics_columns = $('#basics-columns').text(); // this really should be validated somehow
 		create_zip();
-	});
-	$('#basics-url').change(function() {
-		$('#basics-key').val(getKey());
 	});
 	
 	// Responsive navigation
