@@ -13,9 +13,9 @@ function create_index_html() {
 						basics_ga +
 						"']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })(); </script> end analytics -->";
 	} else {
-		ua_code = "<!-- Google Analytics code not set in generator, therefore no analytics. Paste your own here. -->"	
+		ua_code = "<!-- Google Analytics code not set in generator, therefore no analytics. Paste your own here. -->";
 	}
-	return(index_html({html_ua: ua_code, html_key: basics_key, html_columns: basics_columns, html_title: basics_title}));
+	return (index_html({html_ua: ua_code, html_key: basics_key, html_columns: basics_columns, html_title: basics_title}));
 }
 
 function create_zip(index_html) {
@@ -34,6 +34,21 @@ function create_zip(index_html) {
 	});
 }
 
+function getKey() {
+	var toSlashes = /[/&=?#]+/gi;
+	basics_url = $('#basics-url').val().replace(toSlashes, "/").split('/');
+	basics_url.sort(function (a, b) { return b.length - a.length; });
+	return(basics_url[0]);
+}
+
+function validateKey(key) {
+	if (key.length === 44) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 $(document).ready(function () {
 	$.get("templates/index.html", function (data) {
 		template_html = String(data);
@@ -48,7 +63,11 @@ $(document).ready(function () {
 		basics_columns = $('#basics-columns').text();
 		create_zip();
 	});
-// Responsive navigation
+	$('#basics-url').change(function() {
+		$('#basics-key').val(getKey());
+	});
+	
+	// Responsive navigation
 	$('.navbar .toggle-nav-bar').each( function() {
 		var toggleButton = $(this);
 		var navbar = toggleButton.closest('.navbar');
