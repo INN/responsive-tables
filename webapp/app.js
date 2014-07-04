@@ -28,7 +28,7 @@
 
   function create_zip() {
     // loading pre-created zip, instead of loading and adding all the files
-    JSZipUtils.getBinaryContent("/webapp/build.zip", function (err, data) {
+    JSZipUtils.getBinaryContent("webapp/build.zip", function (err, data) {
       if (err)
         throw err;
 
