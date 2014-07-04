@@ -66,8 +66,8 @@
     // Matches " and any Unicode quote-like character
     var doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g;
 
-    columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "'");
-    columns_array = columns_array.replace(/],/g, "],\n");
+    columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "\"");
+    columns_array = columns_array.replace(/\]\,/g, "],\n");
 
     // outputs to the columns textarea
     $('#basics-columns').html(columns_array);
