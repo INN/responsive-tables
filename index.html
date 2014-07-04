@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<title>Responsive Tables Generator</title>
-	<link rel="stylesheet" href="lib/css/style.css">
+	<link rel="stylesheet" href="/webapp/lib/css/style.css">
 </head>
 <body>
 	<div class="container-narrow">
@@ -45,7 +45,7 @@
 			</nav>
 		</div></div>
 	</div>
-	
+
 	<div id="page">
 		<div id="main" class="row-fluid">
 			<h1>Responsive Tables</h1>
@@ -57,9 +57,9 @@
 				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
 				<p>The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </p>
 				<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12">
+				<button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
 				<p>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</p>
 				<input id="basics-ga" type="text" placeholder="UA-XXXXXXX-X"><br>
-				<button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
 				<p id="showInfo"></p>
 			</div>
 			<div id="columns">
@@ -82,11 +82,11 @@
     'http://yourdomain.com/path/to/index.html', {});
 }());
 &lt;/script&gt;</code></pre>
-			
+
 			<p>Be sure to replace <code>http://yourdomain.com/path/to/index.html</code> with the actual URL of your table, and to replace <code>http://yourdomain.com/path/to/pym.js</code> with the location of the pym.js file, found in the same directory.</p>
-			
+
 			<h3>Credits</h3>
-			
+
 			<p>This little project uses:</p>
 			<ul>
 				<li><a href="http://blog.apps.npr.org/pym.js/">NPR's pym.js</a>, </li>
@@ -98,19 +98,19 @@
 			<p>Check them out!</p>
 		</div>
 	</div>
-	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="http://backbonejs.org/backbone-min.js"></script>
-	<script src="http://underscorejs.org/underscore-min.js"></script>
-	<script src="lib/js/jszip.js"></script><!-- use .min.js when working -->
-	<script src="lib/js/jszip-utils.min.js"></script>
-	<script src="lib/js/tabletop.js"></script>
-	<script src="lib/js/bootstrap-transition.js"></script>
-	<script src="lib/js/bootstrap-collapse.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/swig/1.4.1/swig.min.js"></script>
+
+	<script src="/webapp/lib/js/jszip.js"></script><!-- use .min.js when working -->
+	<script src="/webapp/lib/js/jszip-utils.min.js"></script>
+	<script src="/webapp/lib/js/tabletop.js"></script>
+	<script src="/webapp/lib/js/bootstrap-transition.js"></script>
+	<script src="/webapp/lib/js/bootstrap-collapse.js"></script>
 	<!-- Mandatory in IE 6, 7, 8 and 9. -->
 	<!--[if IE]>
-		<script type="text/javascript" src="lib/js/jszip-utils-ie.min.js"></script>
+		<script type="text/javascript" src="/webapps/lib/js/jszip-utils-ie.min.js"></script>
 	<![endif]-->
-	<script src="lib/js/FileSaver.js"></script>
-	<script src="app.js"></script>
+	<script src="/webapp/lib/js/FileSaver.js"></script>
+	<script src="/webapp/app.js"></script>
 </body>
 </html>
