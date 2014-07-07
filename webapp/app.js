@@ -3,7 +3,8 @@
       basics_key = '',
       basics_ga = '',
       basics_columns = '',
-      ua_code = '';
+      ua_code = '',
+      spinner;
 
   function create_index_html() {
     var rendered;
@@ -69,8 +70,10 @@
 
     // outputs to the columns textarea
     $('#basics-columns').html(columns_array);
-    // Title to the title <input> 
+    // Title to the title <input>
     $('#basics-title').val( Object.keys(tabletop.models)[0].toString() );
+
+    loadingStop();
   }
 
   function startTabletop() {
@@ -81,7 +84,7 @@
       simpleSheet: true
     });
   }
-  
+
   function validateKey(key) {
     if (key.match(/[0-9a-z-]{44}/ig) && key.length === 44) {
       return true;
@@ -90,10 +93,22 @@
     }
   }
 
+  function loadingStart() {
+    if (!spinner)
+      spinner = new Spinner({ color: 'white', width: 2 }).spin($('.spinner')[0]);
+
+    $('.loading-modal').show();
+  }
+
+  function loadingStop() {
+    $('.loading-modal').hide();
+  }
+
   $(document).ready(function () {
     // Updates basics_key when #basics-keyurl is updated URL
     $('#basics-keyurl').change(function() {
-			basics_key = $('#basics-keyurl').val();
+      loadingStart();
+      basics_key = $('#basics-keyurl').val();
       basics_key = getKey();
       $('#basics-keyurl').val(basics_key);
       startTabletop();
@@ -109,6 +124,7 @@
 
     // Starts tabletop, gets spreadsheet JSON
     $('#start-tabletop').click(function() {
+      loadingStart();
       startTabletop();
     });
 
