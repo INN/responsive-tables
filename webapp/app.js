@@ -1,6 +1,5 @@
 (function() {
   var basics_title = '',
-      basics_url = '',
       basics_key = '',
       basics_ga = '',
       basics_columns = '',
@@ -44,8 +43,8 @@
   }
 
   function getKeyFromUrl() {
-    var toSlashes = /[/&=?#]+/gi;
-    basics_url = $('#basics-url').val().replace(toSlashes, "/").split('/');
+    var toSlashes = /[/&=?#]+/gi,
+        basics_url = basics_key.replace(toSlashes, "/").split('/');
     basics_url.sort(function (a, b) { return b.length - a.length; });
     return(basics_url[0]);
   }
@@ -53,16 +52,17 @@
   function getKey() {
     if (validateKey(basics_key)) {
       return basics_key;
-    } else if (basics_url.length >= 44) {
+    } else if (basics_key.length >= 44) {
       basics_key = getKeyFromUrl();
       return basics_key;
     } else {
-      alert("Invalid key or URL\nDid you put the URL in the key box?");
+      alert("Invalid key or URL:\n\n" + basics_key);
     }
   }
 
   function showInfo(data) {
-    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });;
+    console.log(data);
+    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
     // Matches " and any Unicode quote-like character
     var doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g;
 
@@ -73,6 +73,15 @@
     $('#basics-columns').html(columns_array);
   }
 
+  function startTabletop() {
+    tabletop = Tabletop.init({
+      key: getKey(),
+      callback: showInfo,
+      debug: true,
+      simpleSheet: true
+    });
+  }
+  
   function validateKey(key) {
     if (key.length === 44) {
       return true;
@@ -82,32 +91,25 @@
   }
 
   $(document).ready(function () {
-    // Updates basics_key and basics_url when #basics-url is updated URL
-    $('#basics-url').change(function() {
-      basics_key = getKeyFromUrl();
+    // Updates basics_key when #basics-keyurl is updated URL
+    $('#basics-keyurl').change(function() {
+			basics_key = $('#basics-keyurl').val();
+      basics_key = getKey();
       $('#basics-key').val(basics_key);
-    });
-    // Updates basics_key when #basics-key is updated
-    $('#basics-key').change(function() {
-      basics_key = $('#basics-key').val();
+      startTabletop();
     });
     // Updates basics_ga when #basics-ga is updated
     $('#basics-ga').change(function() {
       basics_ga = $('#basics-ga').val();
     });
-    // Updates basics_title when #basics-ga is updated
+    // Updates basics_title when #basics-title is updated
     $('#basics-title').change(function() {
       basics_title = $('#basics-title').val();
     });
 
     // Starts tabletop, gets spreadsheet JSON
-    $('#start-tabletop').click(function() {
-      tabletop = Tabletop.init({
-        key: getKey(),
-        callback: showInfo,
-        debug: true,
-        simpleSheet: true
-      });
+    $('#start-tabletop').click(function(){
+      startTabletop();
     });
 
     // Builds and delivers the zip to the reader

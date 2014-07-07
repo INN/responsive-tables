@@ -53,18 +53,18 @@
 			<p>It works best with tables that have 5-7 columns.</p>
 			<div id="basics">
 				<p>Input your project details here:</p>
+				<label class="control-label" for="basics-title">Title:</label>
 				<input id="basics-title" type="text" placeholder="Title" class="span12" >
-				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
-				<p>The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </p>
-				<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12">
-				<button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
-				<p>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</p>
+				<label class="control-label" for="basics-url">The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </label>
+				<input id="basics-keyurl" type="text" placeholder="Google Spreadsheet URL or key" class="span12">
+				<label>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</label>
 				<input id="basics-ga" type="text" placeholder="UA-XXXXXXX-X"><br>
+        <button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
 				<p id="showInfo"></p>
 			</div>
 			<div id="columns">
-				<p>Input your columns' simplified name and display name in the format <code>[['simplename', 'Display name'], ['anothername', 'Another Name']]</code></p>
-				<textarea id="basics-columns" rows="3" class="span12" placeholder="[['simplename', 'Display name'], ['anothername', 'Another Name']]"></textarea>
+				<label>Input your columns' simplified name and display name in the format <code>[['simplename', 'Display name'], ['anothername', 'Another Name']]</code></label>
+				<textarea id="basics-columns" rows="7" class="span12" placeholder="[['simplename','Display name'], ['anothername', 'Another Name']]"></textarea>
 			</div>
 			<button id="build-zip" class="btn btn-primary btn-large ">Build the zip</button>
 			<hr>
