@@ -31,7 +31,7 @@
       if (err)
         throw err;
 
-      var zip = new JSZip(data);
+      var zip = new JSZip(data),
           html = create_index_html(); // creates index.html
 
       zip.file("index.html", html); // names index.html and adds it to the zip
@@ -43,7 +43,7 @@
   }
 
   function getKeyFromUrl() {
-    var toSlashes = /[/&=?#]+/gi,
+    var toSlashes = /[\/&=?#]+/gi,
         basics_url = basics_key.replace(toSlashes, "/").split('/');
     basics_url.sort(function (a, b) { return b.length - a.length; });
     return(basics_url[0]);
@@ -61,16 +61,16 @@
   }
 
   function showInfo(data) {
-    console.log(data);
-    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
-    // Matches " and any Unicode quote-like character
-    var doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g;
+    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; }),
+        doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g; // Matches " and any Unicode quote-like character
 
     columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "\"");
     columns_array = columns_array.replace(/\]\,/g, "],\n");
 
     // outputs to the columns textarea
     $('#basics-columns').html(columns_array);
+    // Title to the title <input> 
+    $('#basics-title').val( Object.keys(tabletop.models)[0].toString() );
   }
 
   function startTabletop() {
@@ -83,7 +83,7 @@
   }
   
   function validateKey(key) {
-    if (key.length === 44) {
+    if (key.match(/[0-9a-z-]{44}/ig) && key.length === 44) {
       return true;
     } else {
       return false;
@@ -95,7 +95,7 @@
     $('#basics-keyurl').change(function() {
 			basics_key = $('#basics-keyurl').val();
       basics_key = getKey();
-      $('#basics-key').val(basics_key);
+      $('#basics-keyurl').val(basics_key);
       startTabletop();
     });
     // Updates basics_ga when #basics-ga is updated
@@ -108,13 +108,12 @@
     });
 
     // Starts tabletop, gets spreadsheet JSON
-    $('#start-tabletop').click(function(){
+    $('#start-tabletop').click(function() {
       startTabletop();
     });
 
     // Builds and delivers the zip to the reader
     $('#build-zip').click(function () {
-      foo = $('#basics-columns').val();
       try {
         var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
         basics_columns = JSON.stringify(columns_json); // this really should be validated somehow
