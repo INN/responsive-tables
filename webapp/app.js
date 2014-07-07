@@ -2,7 +2,7 @@
   var basics_title = '',
       basics_key = '',
       basics_ga = '',
-      basics_columns = '',
+      basics_columns = [],
       ua_code = '',
       spinner;
 
@@ -62,16 +62,16 @@
   }
 
   function showInfo(data) {
-    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; }),
-        doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g; // Matches " and any Unicode quote-like character
+    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
 
-    columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "\"");
-    columns_array = columns_array.replace(/\]\,/g, "],\n");
+    $.each(columns_array, function(idx, val) {
+      var input = '<tr><td>' + val[0] + '</td>' +
+                  '<td><input type="checkbox" data-column-key="' + val[0] + '" name="use_column" checked /></td>' +
+                  '<td><input type="text" data-column-key="' + val[0] + '" name="column_label" /></td></tr>';
+      $('#columns-form table tbody').append(input);
+    });
 
-    // outputs to the columns textarea
-    $('#basics-columns').html(columns_array);
-    // Title to the title <input>
-    $('#basics-title').val( Object.keys(tabletop.models)[0].toString() );
+    $('#basics-title').val(Object.keys(tabletop.models)[0].toString());
 
     loadingStop();
   }
@@ -104,6 +104,20 @@
     $('.loading-modal').hide();
   }
 
+  function getColumnsData() {
+    var ret = [],
+        container = $('#columns-form');
+
+    $.each(container.find('input'), function(k, v) {
+      if ($(this).attr('name') == 'use_column' && $(this).is(':checked')) {
+        var label = container.find('input[name="column_label"][data-column-key="' + $(this).data('column-key') +'"]');
+        ret.push([$(this).data('column-key'), label.val()]);
+      }
+    });
+
+    return ret;
+  }
+
   $(document).ready(function () {
     // Updates basics_key when #basics-keyurl is updated URL
     $('#basics-keyurl').change(function() {
@@ -130,12 +144,7 @@
 
     // Builds and delivers the zip to the reader
     $('#build-zip').click(function () {
-      try {
-        var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
-        basics_columns = JSON.stringify(columns_json); // this really should be validated somehow
-      } catch (err) {
-        throw new Error("Unable to parse your column definition. Columns must be defined using valid JSON.");
-      }
+      basics_columns = JSON.stringify(getColumnsData());
       create_zip();
     });
 

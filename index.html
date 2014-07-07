@@ -63,8 +63,17 @@
 				<p id="showInfo"></p>
 			</div>
 			<div id="columns">
-				<label>Input your columns' simplified name and display name in the format <code>[['simplename', 'Display name'], ['anothername', 'Another Name']]</code></label>
-				<textarea id="basics-columns" rows="7" class="span12" placeholder="[['simplename','Display name'], ['anothername', 'Another Name']]"></textarea>
+        <form id="columns-form">
+          <table>
+            <tbody>
+              <tr>
+                <th>Column key</th>
+                <th>Include in table?</th>
+                <th>Column label</th>
+              </tr>
+            </tbody>
+          </table>
+        </form>
 			</div>
 			<button id="build-zip" class="btn btn-primary btn-large ">Build the zip</button>
 			<hr>
