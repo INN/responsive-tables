@@ -64,8 +64,9 @@
   function showInfo(data) {
     var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
 
+    $('.column-def').remove();
     $.each(columns_array, function(idx, val) {
-      var input = '<tr><td>' + val[0] + '</td>' +
+      var input = '<tr class="column-def"><td>' + val[0] + '</td>' +
                   '<td><input type="checkbox" data-column-key="' + val[0] + '" name="use_column" checked /></td>' +
                   '<td><input type="text" data-column-key="' + val[0] + '" name="column_label" /></td></tr>';
       $('#columns-form table tbody').append(input);
