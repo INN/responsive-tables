@@ -60,6 +60,15 @@
       alert("Invalid key or URL:\n\n" + basics_key);
     }
   }
+  
+  function preview(html) {
+    $('#table-iframe-container').html(''); // to prevent spare iframes
+    testColumns();
+    var url = 'webapp/preview.html?key=' + basics_key + '&columns=' +  window.btoa(basics_columns); 
+    var pymParent = new pym.Parent(
+      'table-iframe-container',
+      url, {});
+  }
 
   function showInfo(data) {
     var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
@@ -84,6 +93,21 @@
       debug: true,
       simpleSheet: true
     });
+  }
+  
+  function testColumns() {
+    /* 
+    // Not necessary to check, now that getColumnsData returns array
+    try {
+        console.log(getColumnsData());
+        var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
+        basics_columns = JSON.stringify(columns_json);
+      } catch (err) {
+        throw new Error("Unable to parse your column definition. Columns must be defined using valid JSON.");
+      }
+      */
+    // the other purpose of this function was to make sure basics_columns was set. 
+    basics_columns = JSON.stringify(getColumnsData());
   }
 
   function validateKey(key) {
@@ -142,9 +166,15 @@
       loadingStart();
       startTabletop();
     });
+    
+    // Builds zip, embeds in preview div
+    $('#preview').click(function() {
+      preview();
+    });
 
     // Builds and delivers the zip to the reader
     $('#build-zip').click(function () {
+      testColumns();
       basics_columns = JSON.stringify(getColumnsData());
       create_zip();
     });
