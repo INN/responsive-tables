@@ -9,7 +9,7 @@
   function create_index_html() {
     var rendered;
     $.ajax({
-      url: "/templates/index.html",
+      url: "templates/index.html",
       async: false,
       success: function(data) {
         rendered = swig.render(data, {
