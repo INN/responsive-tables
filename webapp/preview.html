@@ -50,7 +50,7 @@
             
             var key = getParam("key");
             console.log(key);
-            var columns = window.atob(getParam("columns"));
+            var columns = JSON.parse(window.atob(getParam("columns")));
             console.log(columns);
             var reponsive_table = new ResponsiveTable(key, columns);
             var inIframe = function() {
@@ -60,7 +60,6 @@
                 return true;
               }
             };
-            $('body').html(key + "<br/>" + columns);
             $(function() {
               if (inIframe())
                 $('body').css('overflow-x', 'hidden');
