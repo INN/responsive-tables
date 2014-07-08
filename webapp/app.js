@@ -1,15 +1,15 @@
 (function() {
   var basics_title = '',
-      basics_url = '',
       basics_key = '',
       basics_ga = '',
-      basics_columns = '',
-      ua_code = '';
+      basics_columns = [],
+      ua_code = '',
+      spinner;
 
   function create_index_html() {
     var rendered;
     $.ajax({
-      url: "/templates/index.html",
+      url: "templates/index.html",
       async: false,
       success: function(data) {
         rendered = swig.render(data, {
@@ -32,7 +32,7 @@
       if (err)
         throw err;
 
-      var zip = new JSZip(data);
+      var zip = new JSZip(data),
           html = create_index_html(); // creates index.html
 
       zip.file("index.html", html); // names index.html and adds it to the zip
@@ -44,8 +44,8 @@
   }
 
   function getKeyFromUrl() {
-    var toSlashes = /[/&=?#]+/gi;
-    basics_url = $('#basics-url').val().replace(toSlashes, "/").split('/');
+    var toSlashes = /[\/&=?#]+/gi,
+        basics_url = basics_key.replace(toSlashes, "/").split('/');
     basics_url.sort(function (a, b) { return b.length - a.length; });
     return(basics_url[0]);
   }
@@ -53,72 +53,129 @@
   function getKey() {
     if (validateKey(basics_key)) {
       return basics_key;
-    } else if (basics_url.length >= 44) {
+    } else if (basics_key.length >= 44) {
       basics_key = getKeyFromUrl();
       return basics_key;
     } else {
-      alert("Invalid key or URL\nDid you put the URL in the key box?");
+      alert("Invalid key or URL:\n\n" + basics_key);
     }
+  }
+  
+  function preview(html) {
+    $('#table-iframe-container').html(''); // to prevent spare iframes
+    testColumns();
+    var url = 'webapp/preview.html?key=' + basics_key + '&columns=' +  window.btoa(basics_columns); 
+    var pymParent = new pym.Parent(
+      'table-iframe-container',
+      url, {});
   }
 
   function showInfo(data) {
-    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });;
-    // Matches " and any Unicode quote-like character
-    var doubleToSingleQuotes = /["\u2018\u2019\u201A\u201B\u201C\u201D\u201E\u201F\u301D\u301E\u301F\uFF02\uFF07]/g;
+    var columns_array = Object.keys(data[0]).map(function(item) { return [item, '']; });
 
-    columns_array = JSON.stringify(columns_array).replace(doubleToSingleQuotes, "\"");
-    columns_array = columns_array.replace(/\]\,/g, "],\n");
+    $('.column-def').remove();
+    $.each(columns_array, function(idx, val) {
+      var input = '<tr class="column-def"><td>' + val[0] + '</td>' +
+                  '<td><input type="checkbox" data-column-key="' + val[0] + '" name="use_column" checked /></td>' +
+                  '<td><input type="text" data-column-key="' + val[0] + '" name="column_label" /></td></tr>';
+      $('#columns-form table tbody').append(input);
+    });
 
-    // outputs to the columns textarea
-    $('#basics-columns').html(columns_array);
+    $('#basics-title').val(Object.keys(tabletop.models)[0].toString());
+
+    loadingStop();
+  }
+
+  function startTabletop() {
+    tabletop = Tabletop.init({
+      key: getKey(),
+      callback: showInfo,
+      debug: true,
+      simpleSheet: true
+    });
+  }
+  
+  function testColumns() {
+    /* 
+    // Not necessary to check, now that getColumnsData returns array
+    try {
+        console.log(getColumnsData());
+        var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
+        basics_columns = JSON.stringify(columns_json);
+      } catch (err) {
+        throw new Error("Unable to parse your column definition. Columns must be defined using valid JSON.");
+      }
+      */
+    // the other purpose of this function was to make sure basics_columns was set. 
+    basics_columns = JSON.stringify(getColumnsData());
   }
 
   function validateKey(key) {
-    if (key.length === 44) {
+    if (key.match(/[0-9a-z-]{44}/ig) && key.length === 44) {
       return true;
     } else {
       return false;
     }
   }
 
-  $(document).ready(function () {
-    // Updates basics_key and basics_url when #basics-url is updated URL
-    $('#basics-url').change(function() {
-      basics_key = getKeyFromUrl();
-      $('#basics-key').val(basics_key);
+  function loadingStart() {
+    if (!spinner)
+      spinner = new Spinner({ color: 'white', width: 2 }).spin($('.spinner')[0]);
+
+    $('.loading-modal').show();
+  }
+
+  function loadingStop() {
+    $('.loading-modal').hide();
+  }
+
+  function getColumnsData() {
+    var ret = [],
+        container = $('#columns-form');
+
+    $.each(container.find('input'), function(k, v) {
+      if ($(this).attr('name') == 'use_column' && $(this).is(':checked')) {
+        var label = container.find('input[name="column_label"][data-column-key="' + $(this).data('column-key') +'"]');
+        ret.push([$(this).data('column-key'), label.val()]);
+      }
     });
-    // Updates basics_key when #basics-key is updated
-    $('#basics-key').change(function() {
-      basics_key = $('#basics-key').val();
+
+    return ret;
+  }
+
+  $(document).ready(function () {
+    // Updates basics_key when #basics-keyurl is updated URL
+    $('#basics-keyurl').change(function() {
+      loadingStart();
+      basics_key = $('#basics-keyurl').val();
+      basics_key = getKey();
+      $('#basics-keyurl').val(basics_key);
+      startTabletop();
     });
     // Updates basics_ga when #basics-ga is updated
     $('#basics-ga').change(function() {
       basics_ga = $('#basics-ga').val();
     });
-    // Updates basics_title when #basics-ga is updated
+    // Updates basics_title when #basics-title is updated
     $('#basics-title').change(function() {
       basics_title = $('#basics-title').val();
     });
 
     // Starts tabletop, gets spreadsheet JSON
     $('#start-tabletop').click(function() {
-      tabletop = Tabletop.init({
-        key: getKey(),
-        callback: showInfo,
-        debug: true,
-        simpleSheet: true
-      });
+      loadingStart();
+      startTabletop();
+    });
+    
+    // Builds zip, embeds in preview div
+    $('#preview').click(function() {
+      preview();
     });
 
     // Builds and delivers the zip to the reader
     $('#build-zip').click(function () {
-      foo = $('#basics-columns').val();
-      try {
-        var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
-        basics_columns = JSON.stringify(columns_json); // this really should be validated somehow
-      } catch (err) {
-        throw new Error("Unable to parse your column definition. Columns must be defined using valid JSON.");
-      }
+      testColumns();
+      basics_columns = JSON.stringify(getColumnsData());
       create_zip();
     });
 

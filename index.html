@@ -53,20 +53,34 @@
 			<p>It works best with tables that have 5-7 columns.</p>
 			<div id="basics">
 				<p>Input your project details here:</p>
+        <label class="control-label" for="basics-url">Paste the URL or key here. The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </label>
+				<input id="basics-keyurl" type="text" placeholder="Google Spreadsheet URL or key" class="span12">
+				<label class="control-label" for="basics-title">Title:</label>
 				<input id="basics-title" type="text" placeholder="Title" class="span12" >
-				<input id="basics-url" type="text" placeholder="Google Spreadsheet URL" class="span12">
-				<p>The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL. </p>
-				<input id="basics-key" type="text" placeholder="Google Spreadsheet key" class="span12">
-				<button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
-				<p>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</p>
+				<label>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</label>
 				<input id="basics-ga" type="text" placeholder="UA-XXXXXXX-X"><br>
+        <button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
 				<p id="showInfo"></p>
 			</div>
 			<div id="columns">
-				<p>Input your columns' simplified name and display name in the format <code>[['simplename', 'Display name'], ['anothername', 'Another Name']]</code></p>
-				<textarea id="basics-columns" rows="3" class="span12" placeholder="[['simplename', 'Display name'], ['anothername', 'Another Name']]"></textarea>
+        <form id="columns-form">
+          <table>
+            <tbody>
+              <tr>
+                <th>Column key</th>
+                <th>Include in table?</th>
+                <th>Column label</th>
+              </tr>
+            </tbody>
+          </table>
+        </form>
 			</div>
+      <button id="preview" class="btn btn-large">Preview</button>
 			<button id="build-zip" class="btn btn-primary btn-large ">Build the zip</button>
+      <br/>
+      
+      <div id="table-iframe-container"></div>
+      
 			<hr>
 			<h3>Uploading</h3>
 			<p>It's a simple as unzipping the contents of the .zip to a directory on your website.</p>
@@ -100,17 +114,20 @@
 	</div>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/swig/1.4.1/swig.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
 
 	<script src="webapp/lib/js/jszip.js"></script><!-- use .min.js when working -->
 	<script src="webapp/lib/js/jszip-utils.min.js"></script>
 	<script src="webapp/lib/js/tabletop.js"></script>
 	<script src="webapp/lib/js/bootstrap-transition.js"></script>
 	<script src="webapp/lib/js/bootstrap-collapse.js"></script>
+  <script src="assets/pym.js"></script>
 	<!-- Mandatory in IE 6, 7, 8 and 9. -->
 	<!--[if IE]>
 		<script type="text/javascript" src="/webapps/lib/js/jszip-utils-ie.min.js"></script>
 	<![endif]-->
 	<script src="webapp/lib/js/FileSaver.js"></script>
 	<script src="webapp/app.js"></script>
+  <div class="loading-modal"><div class="spinner"></div></div>
 </body>
 </html>
