@@ -131,6 +131,14 @@
     $('#table-iframe-container').html('');
   }
 
+  function goToTab(tab) {
+    var li = $('li[data-tab="' + tab + '"]');
+    li.siblings().removeClass('active');
+    li.addClass('active');
+    $('.tab').hide();
+    $('#' + tab).show();
+  }
+
   $(document).ready(function () {
     // Fetch the spreadsheet data when url/key is pasted or changed
     var keyOrUrlUpdate = function() {
@@ -159,7 +167,10 @@
     $('#preview').click(preview);
 
     // Builds and delivers the zip to the reader
-    $('#build-zip').click(create_zip);
+    $('#build-zip').click(function() {
+      goToTab('upload-embed');
+      create_zip();
+    });
 
     // Focus on url/key field on ready
     setTimeout(function() { $('#basics-keyurl').focus(); }, 0);
@@ -169,11 +180,7 @@
     $('#' + active_tab).show();
 
     $('#tab-nav li').click(function() {
-      active_tab = $(this).data('tab');
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      $('.tab').hide();
-      $('#' + active_tab).show();
+      goToTab($(this).data('tab'));
     });
 
     // Responsive navigation
