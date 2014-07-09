@@ -5221,7 +5221,12 @@ img[class*="wp-image-"] {
 
 .sticky-nav-wrapper { height: 0; }
 
+#main h1 {
+  margin-bottom: 10px;
+}
+
 #page {
+  padding-top: 50px;
   margin-bottom: 20px;
 }
 
@@ -5270,10 +5275,22 @@ img[class*="wp-image-"] {
   display: block;
   width: 100%;
   height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #tab-nav li.active a {
   background: #ededed;
 }
 #tab-nav li a:hover {
   background: #ddd;
+}
+
+@media (max-width: 420px) {
+  #main h1 {
+    font-size: 32px;
+  }
+  #tab-nav li {
+    font-size: 14px;
+  }
 }
