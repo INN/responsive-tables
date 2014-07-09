@@ -5218,3 +5218,62 @@ img[class*="wp-image-"] {
   z-index: 99999999;
   display: none;
 }
+
+.sticky-nav-wrapper { height: 0; }
+
+#page {
+  margin-bottom: 20px;
+}
+
+#page label {
+  color: #454545;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* generate steps */
+#the-rest { display: none; }
+
+/* preview */
+#previewTable {
+  display: none;
+  margin-top: 20px;
+  min-height: 200px;
+}
+
+/* tabs */
+.tab {
+  display: none;
+}
+
+/* tab nav */
+#tab-nav {
+  margin: 0;
+  padding: 0;
+  float: left;
+  width: 100%;
+}
+#tab-nav li {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  list-style-type: none;
+  float: left;
+  width: 33%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#tab-nav li a {
+  background: #fafafa;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#tab-nav li.active a {
+  background: #ededed;
+}
+#tab-nav li a:hover {
+  background: #ddd;
+}
