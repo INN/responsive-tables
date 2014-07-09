@@ -1,15 +1,38 @@
 # Responsive tables
 
+[Generate responsive tables using the webapp](https://inn.github.io/responsive-tables/)
+
 ## What is it?
 
-A simple webapp that takes user input to find your Google Drive spreadsheet key and column formatting information, then generates a .zip with a ready-for-deployment responsive table and all required assets.
+This repo contains two utilities that do the same thing:
+
+- A [simple webapp](https://inn.github.io/responsive-tables/) that takes your Google Drive spreadsheet key, lets you format the columns, then generates a .zip with a ready-for-deployment responsive table and all required assets.
+- A simple `render.py` script that reads from `config.json` to find your Google Drive spreadsheet key and column formatting information then generates a build directory with a ready-for-deployment responsive table and all required assets.
 
 It works best with tables that have 5-7 columns.
 
-## Usage
+## Webapp Usage
+
+[Use the webapp](https://inn.github.io/responsive-tables/). We've published it on GitHub pages for ease of use. 
+
+1. Paste in your URL
+2. Configure your column headers and the table title
+3. Optionally, add your Google Analytics ID
+4. Optionally, preview the table
+5. Download the `.zip` and unzip it to your server
+6. [Embed the table in your site](#embedding-the-table)
+
+## Script usage
+
+If you want to use the script instead of the webapp, go ahead and install this repository on your computer. 
 
 ### Setup
 
+You'll need [Jinja2](http://jinja.pocoo.org/) and Python for this project.
+
+    sudo easy_install pip
+    pip install -r requirements.txt
+    
 Install this repository:
 
     git clone https://github.com/INN/responsive-tables.git
@@ -46,9 +69,27 @@ Next, define the columns to display in your table. For example:
 
 Each item in the `columns` array follows the format `["simplifiedlabel", "Label for display"]`. Simplified labels are the column headings in your document with spaces and underscores removed, and uppercase letters made lowercase. Allowed characters are lowercase a-z, numbers, and the `-` character. 
 
-## Deploying to server
+### Render
 
-Copy the contents of the `build` zip to a directory on your website.
+Once you've filled in `config.json`, run:
+
+    ./render.py
+
+This will create a build directory and place a copy of your rendered table and all assets inside it. You can deploy the contents of this directory to your host as-is.
+    
+If the project renders successfully but you have a blank page, make sure your document is [published](https://support.google.com/docs/answer/183965?rd=1&authuser=0) and that permissions allow anyone with the link to view the document. 
+
+### Multiple configurations
+
+As a convenience, you can create config files and store them in the `configs` directory to ease re-rendering of tables.
+
+For example, if you create a config file named `myspecialtable.json`, then you can tell `render.py` to render that specific configuration like so:
+
+    ./render.py -c myspecialtable
+
+### Deploying to server
+
+Copy the contents of the `build` directory to a directory on your website.
 
 ## Embedding the table
 
