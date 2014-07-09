@@ -1,19 +1,19 @@
 # Responsive tables
 
-[Generate responsive tables using the webapp](https://inn.github.io/responsive-tables/)
+[Generate responsive tables using the webapp](http://inn.github.io/responsive-tables/)
 
 ## What is it?
 
 This repo contains two utilities that do the same thing:
 
-- A [simple webapp](https://inn.github.io/responsive-tables/) that takes your Google Drive spreadsheet key, lets you format the columns, then generates a .zip with a ready-for-deployment responsive table and all required assets.
+- A [simple webapp](http://inn.github.io/responsive-tables/) that takes your Google Drive spreadsheet key, lets you format the columns, then generates a .zip with a ready-for-deployment responsive table and all required assets.
 - A simple `render.py` script that reads from `config.json` to find your Google Drive spreadsheet key and column formatting information then generates a build directory with a ready-for-deployment responsive table and all required assets.
 
 It works best with tables that have 5-7 columns.
 
 ## Webapp Usage
 
-[Use the webapp](https://inn.github.io/responsive-tables/). We've published it on GitHub pages for ease of use. 
+[Use the webapp](http://inn.github.io/responsive-tables/). We've published it on GitHub pages for ease of use. 
 
 1. Paste in your URL
 2. Configure your column headers and the table title
