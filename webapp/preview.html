@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Responsive Table Preview</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- begin css  -->
+        <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/tablesaw/tablesaw.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/tablesaw/icons/icons.css" />
+        <link rel="stylesheet" type="text/css" href="../assets/style.css" />
+        <!-- end css -->
+
+        <!-- begin scripts -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+        <!-- end scripts -->
+    </head>
+
+    <body>
+        <noscript>
+            <div id="noscript_note">You must have JavaScript enabled to view this page.</div>
+        </noscript>
+
+        <div id="data"></div>
+
+        <script src="../assets/pym.js"></script>
+        <script src="../assets/tablesaw/tablesaw.js"></script>
+        <script src="../assets/tabletop.js"></script>
+        <script src="../assets/responsiveTable.js"></script>
+        <script type="text/javascript">
+          (function() {
+            // return a parameter value from the current URL
+            // http://ziemecki.net/content/javascript-parsing-url-parameters
+            var getParam = function(sname) {
+              var params = location.search.substr(location.search.indexOf("?")+1);
+              var sval = "";
+              params = params.split("&");
+                // split param and value into individual pieces
+                for (var i=0; i<params.length; i++)
+                   {
+                     temp = params[i].split("=");
+                     if ( [temp[0]] == sname ) { sval = temp[1]; }
+                   }
+              return sval;
+            };
+
+            var key = getParam("key"),
+                columns = JSON.parse(window.atob(getParam("columns"))),
+                reponsive_table = new ResponsiveTable(key, columns);
+
+            var inIframe = function() {
+              try {
+                return window.self !== window.top;
+              } catch (e) {
+                return true;
+              }
+            };
+
+            $(function() {
+              if (inIframe())
+                $('body').css('overflow-x', 'hidden');
+            });
+          })();
+        </script>
+    </body>
+</html>
