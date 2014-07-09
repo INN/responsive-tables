@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>TEST FILE</title>
+        <title>Responsive Table Preview</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,8 +34,7 @@
           (function() {
             // return a parameter value from the current URL
             // http://ziemecki.net/content/javascript-parsing-url-parameters
-            function getParam ( sname )
-            {
+            var getParam = function(sname) {
               var params = location.search.substr(location.search.indexOf("?")+1);
               var sval = "";
               params = params.split("&");
@@ -46,13 +45,12 @@
                      if ( [temp[0]] == sname ) { sval = temp[1]; }
                    }
               return sval;
-            }
-            
-            var key = getParam("key");
-            console.log(key);
-            var columns = JSON.parse(window.atob(getParam("columns")));
-            console.log(columns);
-            var reponsive_table = new ResponsiveTable(key, columns);
+            };
+
+            var key = getParam("key"),
+                columns = JSON.parse(window.atob(getParam("columns"))),
+                reponsive_table = new ResponsiveTable(key, columns);
+
             var inIframe = function() {
               try {
                 return window.self !== window.top;
@@ -60,27 +58,12 @@
                 return true;
               }
             };
+
             $(function() {
               if (inIframe())
                 $('body').css('overflow-x', 'hidden');
             });
           })();
         </script>
-
-        <!-- maybe use INN analytics code here -->
-        <!-- begin analytics
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', '{{ ua_code }}']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
-        end analytics -->
-
     </body>
 </html>

@@ -2,7 +2,6 @@
   var basics_title = '',
       basics_key = '',
       basics_ga = '',
-      basics_columns = [],
       ua_code = '',
       spinner;
 
@@ -16,7 +15,7 @@
           locals: {
             ua_code: ua_code,
             key: basics_key,
-            columns: basics_columns,
+            columns: JSON.stringify(getColumnsData()),
             title: basics_title
           },
           autoescape: false
@@ -60,11 +59,10 @@
       alert("Invalid key or URL:\n\n" + basics_key);
     }
   }
-  
+
   function preview(html) {
     $('#table-iframe-container').html(''); // to prevent spare iframes
-    testColumns();
-    var url = 'webapp/preview.html?key=' + basics_key + '&columns=' +  window.btoa(basics_columns); 
+    var url = 'webapp/preview.html?key=' + basics_key + '&columns=' +  window.btoa(JSON.stringify(getColumnsData()));
     var pymParent = new pym.Parent(
       'table-iframe-container',
       url, {});
@@ -81,8 +79,9 @@
       $('#columns-form table tbody').append(input);
     });
 
-    $('#basics-title').val(Object.keys(tabletop.models)[0].toString());
+    $('#basics-title').val(tabletop.foundSheetNames[0]);
 
+    $('#the-rest').fadeIn();
     loadingStop();
   }
 
@@ -93,21 +92,6 @@
       debug: true,
       simpleSheet: true
     });
-  }
-  
-  function testColumns() {
-    /* 
-    // Not necessary to check, now that getColumnsData returns array
-    try {
-        console.log(getColumnsData());
-        var columns_json = JSON.parse($('#basics-columns').val()); // make sure columns definition is valid JSON
-        basics_columns = JSON.stringify(columns_json);
-      } catch (err) {
-        throw new Error("Unable to parse your column definition. Columns must be defined using valid JSON.");
-      }
-      */
-    // the other purpose of this function was to make sure basics_columns was set. 
-    basics_columns = JSON.stringify(getColumnsData());
   }
 
   function validateKey(key) {
@@ -145,13 +129,18 @@
 
   $(document).ready(function () {
     // Updates basics_key when #basics-keyurl is updated URL
-    $('#basics-keyurl').change(function() {
+    var keyOrUrlUpdate = function() {
       loadingStart();
       basics_key = $('#basics-keyurl').val();
       basics_key = getKey();
       $('#basics-keyurl').val(basics_key);
       startTabletop();
+    };
+    $('#basics-keyurl').change(keyOrUrlUpdate);
+    $('#basics-keyurl').on('paste', function() {
+      $(this).on('keyup', keyOrUrlUpdate);
     });
+
     // Updates basics_ga when #basics-ga is updated
     $('#basics-ga').change(function() {
       basics_ga = $('#basics-ga').val();
@@ -166,7 +155,7 @@
       loadingStart();
       startTabletop();
     });
-    
+
     // Builds zip, embeds in preview div
     $('#preview').click(function() {
       preview();
@@ -174,9 +163,19 @@
 
     // Builds and delivers the zip to the reader
     $('#build-zip').click(function () {
-      testColumns();
-      basics_columns = JSON.stringify(getColumnsData());
       create_zip();
+    });
+
+    // Tab nav
+    var active_tab = $('#tab-nav li.active').data('tab');
+    $('#' + active_tab).show();
+
+    $('#tab-nav li').click(function() {
+      active_tab = $(this).data('tab');
+      $(this).siblings().removeClass('active');
+      $(this).addClass('active');
+      $('.tab').hide();
+      $('#' + active_tab).show();
     });
 
     // Responsive navigation
