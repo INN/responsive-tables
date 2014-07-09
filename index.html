@@ -67,11 +67,13 @@
           <h5>Spreadsheet key or URL</h5>
           <p>
             <input id="basics-keyurl" type="text" placeholder="Google Spreadsheet URL or key" class="span12">
-            <label>Paste your spreadsheet's key or URL here. The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL.</label>
+            <label>Type or paste your spreadsheet's key or URL here. The "key" is a long sequence of letters, numbers and dashes from the spreadsheet URL.</label>
+            <button id="start-tabletop" class="btn btn-primary">Get spreadsheet</button>
           </p>
         </div>
 
         <div id="the-rest">
+
           <h5>Title</h5>
           <p>
             <input id="basics-title" type="text" placeholder="Title" class="span12">
@@ -101,9 +103,13 @@
             </table>
           </form>
         </div>
-        <button id="preview" class="btn">Preview</button>
-        <button id="build-zip" class="btn btn-primary">Build the zip</button>
-        <div id="table-iframe-container"></div>
+        <button id="build-zip" class="btn btn-primary btn-large">Download</button>
+        <span>or</span>
+        <button id="preview" class="btn btn-small">Preview</button>
+        <div id="previewTable">
+          <h5>Preview</h5>
+          <div id="table-iframe-container"></div>
+        </div>
       </div>
     </div>
   </div>

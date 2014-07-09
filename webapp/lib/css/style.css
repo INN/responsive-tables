@@ -5234,6 +5234,13 @@ img[class*="wp-image-"] {
 /* generate steps */
 #the-rest { display: none; }
 
+/* preview */
+#previewTable {
+  display: none;
+  margin-top: 20px;
+  min-height: 200px;
+}
+
 /* tabs */
 .tab {
   display: none;

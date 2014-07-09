@@ -1,9 +1,5 @@
 (function() {
-  var basics_title = '',
-      basics_key = '',
-      basics_ga = '',
-      ua_code = '',
-      spinner;
+  var spinner;
 
   function create_index_html() {
     var rendered;
@@ -13,10 +9,10 @@
       success: function(data) {
         rendered = swig.render(data, {
           locals: {
-            ua_code: ua_code,
-            key: basics_key,
+            ua_code: $('#basics-ga').val(),
+            key:     getKey($('#basics-keyurl').val()),
             columns: JSON.stringify(getColumnsData()),
-            title: basics_title
+            title:   $('#basics-title').val()
           },
           autoescape: false
         });
@@ -36,33 +32,35 @@
 
       zip.file("index.html", html); // names index.html and adds it to the zip
       var content = zip.generate({ type: "blob" }), //generates the zip
-          filename = basics_title + ".zip";
+          filename = $('#basics-title').val() + ".zip";
 
       saveAs(content, filename); // with browser support, saves it to your default save location
     });
   }
 
-  function getKeyFromUrl() {
+  function getKeyFromUrl(url) {
     var toSlashes = /[\/&=?#]+/gi,
-        basics_url = basics_key.replace(toSlashes, "/").split('/');
-    basics_url.sort(function (a, b) { return b.length - a.length; });
-    return(basics_url[0]);
+        url = url.replace(toSlashes, "/").split('/');
+    url.sort(function (a, b) { return b.length - a.length; });
+    return(url[0]);
   }
 
-  function getKey() {
-    if (validateKey(basics_key)) {
-      return basics_key;
-    } else if (basics_key.length >= 44) {
-      basics_key = getKeyFromUrl();
-      return basics_key;
+  function getKey(value) {
+    if (validateKey(value)) {
+      return value;
+    } else if (value.length >= 44) {
+      return getKeyFromUrl(value);
     } else {
-      alert("Invalid key or URL:\n\n" + basics_key);
+      alert("Invalid key or URL:\n\n" + value);
+      loadingStop();
     }
   }
 
   function preview(html) {
+    $('#previewTable').show();
+    window.location.href = '#previewTable';
     $('#table-iframe-container').html(''); // to prevent spare iframes
-    var url = 'webapp/preview.html?key=' + basics_key + '&columns=' +  window.btoa(JSON.stringify(getColumnsData()));
+    var url = 'webapp/preview.html?key=' + getKey($('#basics-keyurl').val()) + '&columns=' + window.btoa(JSON.stringify(getColumnsData()));
     var pymParent = new pym.Parent(
       'table-iframe-container',
       url, {});
@@ -87,7 +85,7 @@
 
   function startTabletop() {
     tabletop = Tabletop.init({
-      key: getKey(),
+      key: getKey($('#basics-keyurl').val()),
       callback: showInfo,
       debug: true,
       simpleSheet: true
@@ -127,27 +125,28 @@
     return ret;
   }
 
+  function hidePreview() {
+    $('#previewTable').hide();
+    window.location.href = '#';
+    $('#table-iframe-container').html('');
+  }
+
   $(document).ready(function () {
-    // Updates basics_key when #basics-keyurl is updated URL
+    // Fetch the spreadsheet data when url/key is pasted or changed
     var keyOrUrlUpdate = function() {
+      var key = getKey($('#basics-keyurl').val());
+      hidePreview();
       loadingStart();
-      basics_key = $('#basics-keyurl').val();
-      basics_key = getKey();
-      $('#basics-keyurl').val(basics_key);
-      startTabletop();
+      if (key) {
+        $('#basics-keyurl').val(key);
+        startTabletop();
+      } else
+        loadingStop();
+
+      $('#basics-keyurl').off('keyup');
     };
-    $('#basics-keyurl').change(keyOrUrlUpdate);
     $('#basics-keyurl').on('paste', function() {
       $(this).on('keyup', keyOrUrlUpdate);
-    });
-
-    // Updates basics_ga when #basics-ga is updated
-    $('#basics-ga').change(function() {
-      basics_ga = $('#basics-ga').val();
-    });
-    // Updates basics_title when #basics-title is updated
-    $('#basics-title').change(function() {
-      basics_title = $('#basics-title').val();
     });
 
     // Starts tabletop, gets spreadsheet JSON
@@ -157,14 +156,13 @@
     });
 
     // Builds zip, embeds in preview div
-    $('#preview').click(function() {
-      preview();
-    });
+    $('#preview').click(preview);
 
     // Builds and delivers the zip to the reader
-    $('#build-zip').click(function () {
-      create_zip();
-    });
+    $('#build-zip').click(create_zip);
+
+    // Focus on url/key field on ready
+    setTimeout(function() { $('#basics-keyurl').focus(); }, 0);
 
     // Tab nav
     var active_tab = $('#tab-nav li.active').data('tab');
