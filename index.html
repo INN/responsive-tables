@@ -75,7 +75,6 @@
         </div>
 
         <div id="the-rest">
-
           <h5>Title</h5>
           <p>
             <input id="basics-title" type="text" placeholder="Title" class="span12">
@@ -88,33 +87,40 @@
             <label>If you want Google Analytics tracking for your table, enter your Google Analytics Tracking ID, of the form UA-XXXXXXX-X</label>
           </p>
 
-        <p id="showInfo"></p>
-        <div id="columns">
-          <h5>Choose columns</h5>
-          <label>Choose the columns to include in your responsive table and specify column labels for each.</label>
+          <p id="showInfo"></p>
+          <div id="columns">
+            <h5>Choose columns</h5>
+            <label>Choose the columns to include in your responsive table and specify column labels for each.</label>
 
-          <form id="columns-form">
-            <table>
-              <tbody>
-              <tr>
-                <th>Column key</th>
-                <th>Include in table?</th>
-                <th>Column label</th>
-              </tr>
-              </tbody>
-            </table>
-          </form>
-        </div>
-        <button id="build-zip" class="btn btn-primary btn-large">Download</button>
-        <span>or</span>
-        <button id="preview" class="btn btn-small">Preview</button>
-        <div id="previewTable">
-          <h5>Preview</h5>
-          <div id="table-iframe-container"></div>
+            <form id="columns-form">
+              <table>
+                <tbody>
+                <tr>
+                  <th>Column key</th>
+                  <th>Include in table?</th>
+                  <th>Column label</th>
+                </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <div id="breakpoint">
+            <h5>Set the breakpoint</h5>
+            <input id="breakpoint" type="text" placeholder="Example: 60em or 960px">
+            <label>Change the width at which the table switches to a stacked list.</label>
+          </div>
+
+          <button id="build-zip" class="btn btn-primary btn-large">Download</button>
+          <span>or</span>
+          <button id="preview" class="btn btn-small">Preview</button>
+          <div id="previewTable">
+            <h5>Preview</h5>
+            <div id="table-iframe-container"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
     <div id="upload-embed" class="tab">
       <h3>Uploading</h3>
@@ -167,6 +173,7 @@
     <script type="text/javascript" src="/webapps/lib/js/jszip-utils-ie.min.js"></script>
   <![endif]-->
 <script src="webapp/lib/js/FileSaver.js"></script>
+<script src="webapp/utils.js"></script>
 <script src="webapp/app.js"></script>
 <div class="loading-modal"><div class="spinner"></div></div>
 </body>

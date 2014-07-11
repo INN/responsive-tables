@@ -21,6 +21,17 @@
     return rendered;
   }
 
+  function setBreakpoints() {
+    var breakpoint = $('#breakpoint input').val();
+    if (breakpoint !== '') {
+      return {
+        'tablesaw/tablesaw.css': setBreakpoint('assets/tablesaw/tablesaw.css', breakpoint),
+        'style.css': setBreakpoint('assets/style.css', breakpoint)
+      };
+    }
+    return false;
+  }
+
   function create_zip() {
     // loading pre-created zip, instead of loading and adding all the files
     JSZipUtils.getBinaryContent("webapp/build.zip", function (err, data) {
@@ -28,9 +39,14 @@
         throw err;
 
       var zip = new JSZip(data),
-          html = create_index_html(); // creates index.html
+          html = create_index_html(),
+          css = setBreakpoints();
 
       zip.file("index.html", html); // names index.html and adds it to the zip
+
+      if (css)
+        $.each(css, function(k, v) { zip.file(k, v); });
+
       var content = zip.generate({ type: "blob" }), //generates the zip
           filename = $('#basics-title').val() + ".zip";
 
@@ -58,9 +74,17 @@
 
   function preview(html) {
     $('#previewTable').show();
+    $('#table-iframe-container').html('');
     window.location.href = '#previewTable';
-    $('#table-iframe-container').html(''); // to prevent spare iframes
-    var url = 'webapp/preview.html?key=' + getKey($('#basics-keyurl').val()) + '&columns=' + window.btoa(JSON.stringify(getColumnsData()));
+
+    var params = {
+      key: getKey($('#basics-keyurl').val()),
+      breakpoint: ($('#breakpoint input').val() !== '')? $('#breakpoint input').val() : '60em',
+      columns: btoa(JSON.stringify(getColumnsData()))
+    };
+
+    var url = 'webapp/preview.html?' + decodeURIComponent($.param(params));
+
     var pymParent = new pym.Parent(
       'table-iframe-container',
       url, {});

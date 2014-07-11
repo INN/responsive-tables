@@ -34,11 +34,11 @@
   }
 }
 
-@media screen and (max-width: 60em) {
+@media screen and (max-width: 59.9375em) {
   a.ellipsis-link {
     max-width: 310px;
   }
   #data table {
-    font: 100%/1.2 sans-serif;
+    font-size: 1em;
   }
 }

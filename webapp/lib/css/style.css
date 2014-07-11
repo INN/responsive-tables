@@ -5239,6 +5239,10 @@ img[class*="wp-image-"] {
 /* generate steps */
 #the-rest { display: none; }
 
+#breakpoint {
+  margin-bottom: 20px;
+}
+
 /* preview */
 #previewTable {
   display: none;
