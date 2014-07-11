@@ -33,27 +33,48 @@
   }
 
   function create_zip() {
-    // loading pre-created zip, instead of loading and adding all the files
-    JSZipUtils.getBinaryContent("webapp/build.zip", function (err, data) {
-      if (err)
-        throw err;
+    var zip = new JSZip(),
+        html = create_index_html(),
+        css = setBreakpoints();
+    
+    // ick
+    addFileToZip("assets/pym.js", "pym.js", zip);
+    addFileToZip("assets/responsiveTable.js", "responsiveTable.js", zip);
+    addFileToZip("assets/style.css", "style.css", zip);
+    addFileToZip("assets/tabletop.js", "tabletop.js", zip);
+    addFileToZip("assets/tablesaw/tablesaw.js", "tablesaw/tablesaw.js", zip);
+    addFileToZip("assets/tablesaw/tablesaw.css", "tablesaw/tablesaw.css", zip);
+    addFileToZip("assets/tablesaw/icons/icons.css", "tablesaw/icons/icons.css", zip);
+    addFileToZip("assets/tablesaw/icons/preview.html", "tablesaw/icons/preview.html", zip);
+    addFileToZip("assets/tablesaw/icons/png/arrow-gray-down.png", "tablesaw/icons/png/arrow-gray-down.png", zip);
+    addFileToZip("assets/tablesaw/icons/png/arrow-gray-left.png", "tablesaw/icons/png/arrow-gray-left.png", zip);
+    addFileToZip("assets/tablesaw/icons/png/arrow-gray-right.png", "tablesaw/icons/png/arrow-gray-right.png", zip);
+    addFileToZip("assets/tablesaw/icons/png/check.png", "tablesaw/icons/png/check.png", zip);
+    addFileToZip("assets/tablesaw/icons/png/sort-ascending.png", "tablesaw/icons/png/sort-ascending.png", zip);
+    addFileToZip("assets/tablesaw/icons/png/sort-descending.png", "tablesaw/icons/png/sort-descending.png", zip);
+    
+    zip.file("index.html", html); // names index.html and adds it to the zip
+    
+    if (css)
+      $.each(css, function(k, v) { zip.file(k, v); });
 
-      var zip = new JSZip(data),
-          html = create_index_html(),
-          css = setBreakpoints();
+    var content = zip.generate({ type: "blob" }), //generates the zip
+        filename = $('#basics-title').val() + ".zip";
 
-      zip.file("index.html", html); // names index.html and adds it to the zip
-
-      if (css)
-        $.each(css, function(k, v) { zip.file(k, v); });
-
-      var content = zip.generate({ type: "blob" }), //generates the zip
-          filename = $('#basics-title').val() + ".zip";
-
-      saveAs(content, filename); // with browser support, saves it to your default save location
+    saveAs(content, filename); // with browser support, saves it to your default save location
+  }
+  
+  function addFileToZip(src, filename, zipvar) {
+    $.ajax({
+      url: src,
+      async: false,
+      success: function(data) {
+        zipvar.file(filename, data);
+        console.log("added " + filename + " to zip.");
+      }
     });
   }
-
+  
   function getKeyFromUrl(url) {
     var toSlashes = /[\/&=?#]+/gi,
         url = url.replace(toSlashes, "/").split('/');
