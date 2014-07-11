@@ -20,8 +20,16 @@ var ResponsiveTable;
 
     self.sortData = function(dataSource) {
       dataSource.sort(function(a, b){
-          if(a[self.columns[0][0]] < b[self.columns[0][0]]) return -1;
-          if(a[self.columns[0][0]] > b[self.columns[0][0]]) return 1;
+        var one = a[self.columns[0][0]],
+            two = b[self.columns[0][0]];
+
+          if (!isNaN(Number(one)))
+            one = Number(one);
+          if (!isNaN(Number(two)))
+            two = Number(two);
+
+          if(one < two) return -1;
+          if(one > two) return 1;
           return 0;
       });
       return dataSource
