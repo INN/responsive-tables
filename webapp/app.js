@@ -35,23 +35,29 @@
   function create_zip() {
     var zip = new JSZip(),
         html = create_index_html(),
-        css = setBreakpoints();
+        css = setBreakpoints(),
+        assets = [
+          'assets/pym.js',
+          'assets/responsiveTable.js',
+          'assets/style.css',
+          'assets/tabletop.js',
+          'assets/tablesaw/tablesaw.js',
+          'assets/tablesaw/tablesaw.css',
+          'assets/tablesaw/icons/icons.css',
+          'assets/tablesaw/icons/preview.html',
+          'assets/tablesaw/icons/png/arrow-gray-down.png',
+          'assets/tablesaw/icons/png/arrow-gray-left.png',
+          'assets/tablesaw/icons/png/arrow-gray-right.png',
+          'assets/tablesaw/icons/png/check.png',
+          'assets/tablesaw/icons/png/sort-ascending.png',
+          'assets/tablesaw/icons/png/sort-descending.png'
+        ];
     
-    // ick
-    addFileToZip("assets/pym.js", "pym.js", zip);
-    addFileToZip("assets/responsiveTable.js", "responsiveTable.js", zip);
-    addFileToZip("assets/style.css", "style.css", zip);
-    addFileToZip("assets/tabletop.js", "tabletop.js", zip);
-    addFileToZip("assets/tablesaw/tablesaw.js", "tablesaw/tablesaw.js", zip);
-    addFileToZip("assets/tablesaw/tablesaw.css", "tablesaw/tablesaw.css", zip);
-    addFileToZip("assets/tablesaw/icons/icons.css", "tablesaw/icons/icons.css", zip);
-    addFileToZip("assets/tablesaw/icons/preview.html", "tablesaw/icons/preview.html", zip);
-    addFileToZip("assets/tablesaw/icons/png/arrow-gray-down.png", "tablesaw/icons/png/arrow-gray-down.png", zip);
-    addFileToZip("assets/tablesaw/icons/png/arrow-gray-left.png", "tablesaw/icons/png/arrow-gray-left.png", zip);
-    addFileToZip("assets/tablesaw/icons/png/arrow-gray-right.png", "tablesaw/icons/png/arrow-gray-right.png", zip);
-    addFileToZip("assets/tablesaw/icons/png/check.png", "tablesaw/icons/png/check.png", zip);
-    addFileToZip("assets/tablesaw/icons/png/sort-ascending.png", "tablesaw/icons/png/sort-ascending.png", zip);
-    addFileToZip("assets/tablesaw/icons/png/sort-descending.png", "tablesaw/icons/png/sort-descending.png", zip);
+    for (var i in assets) { //adds all the assets 
+      url = assets[i];
+      filename = url.replace(/assets\//, '');
+      addFileToZip(url, filename, zip);
+    }
     
     zip.file("index.html", html); // names index.html and adds it to the zip
     
