@@ -83,7 +83,7 @@
   function getKey(value) {
     if (validateKey(value)) {
       return value;
-    } else if (value.length >= 44) {
+    } else if (value.length >= 44 && value.match(/^http/)) {
       return getKeyFromUrl(value);
     } else {
       alert("Invalid key or URL:\n\n" + value);
