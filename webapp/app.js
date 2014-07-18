@@ -1,6 +1,41 @@
 (function() {
   var spinner;
 
+  // Override Tabletop's xhrFetch in order to handle errors
+  // when fetching the spreadsheet
+  Tabletop.prototype.xhrFetch = function(path, callback) {
+    var inLegacyIE = false;
+    try {
+      var testXHR = new XMLHttpRequest();
+      if (typeof testXHR.withCredentials !== 'undefined') {
+        supportsCORS = true;
+      } else {
+        if ("XDomainRequest" in window) {
+          supportsCORS = true;
+          inLegacyIE = true;
+        }
+      }
+    } catch (e) {}
+
+    //support IE8's separate cross-domain object
+    var xhr = inLegacyIE ? new XDomainRequest() : new XMLHttpRequest();
+    if (typeof xhr.onerror == 'undefined')
+      setTimeout(errorLoadingSpreadhsheet, 10000);
+    else
+      xhr.onerror = errorLoadingSpreadhsheet;
+    xhr.open("GET", this.endpoint + path);
+    var self = this;
+    xhr.onload = function() {
+      try {
+        var json = JSON.parse(xhr.responseText);
+      } catch (e) {
+        console.error(e);
+      }
+      callback.call(self, json);
+    };
+    xhr.send();
+  };
+
   function create_index_html() {
     var rendered;
     $.ajax({
@@ -87,7 +122,6 @@
     tabletop = Tabletop.init({
       key: getKey($('#basics-keyurl').val()),
       callback: showInfo,
-      debug: true,
       simpleSheet: true
     });
   }
@@ -109,6 +143,12 @@
 
   function loadingStop() {
     $('.loading-modal').hide();
+  }
+
+  function errorLoadingSpreadhsheet() {
+    loadingStop();
+    alert('There was an error loading your spreadsheet. ' +
+          'Make sure your spreadsheet is published to the web and try again.');
   }
 
   function getColumnsData() {
