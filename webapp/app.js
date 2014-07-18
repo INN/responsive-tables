@@ -147,8 +147,7 @@
 
   function errorLoadingSpreadhsheet() {
     loadingStop();
-    alert('There was an error loading your spreadsheet. ' +
-          'Make sure your spreadsheet is published to the web and try again.');
+    $('#myModal').modal({backdrop:false, show:true});
   }
 
   function getColumnsData() {

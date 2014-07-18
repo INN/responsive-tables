@@ -150,8 +150,22 @@
       </ul>
       <p>Check them out!</p>
     </div>
+  </div>  
+  <div id="myModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Error loading spreadsheet</h3>
+    </div>
+    <div class="modal-body">
+      <p>Make sure your spreadsheet is <a href="https://support.google.com/docs/answer/183965?rd=1&authuser=0">published to the web</a> and try again.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
   </div>
 </div>
+
+  
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/swig/1.4.1/swig.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js"></script>
@@ -161,6 +175,7 @@
 <script src="webapp/lib/js/tabletop.js"></script>
 <script src="webapp/lib/js/bootstrap-transition.js"></script>
 <script src="webapp/lib/js/bootstrap-collapse.js"></script>
+<script src="webapp/lib/js/bootstrap-modal.js"></script>
 <script src="assets/pym.js"></script>
 <!-- Mandatory in IE 6, 7, 8 and 9. -->
 <!--[if IE]>
