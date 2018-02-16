@@ -56,6 +56,7 @@
       allowtransparency="true" frameborder="0" scrolling="0" width="125" height="30"></iframe>
     <iframe src="http://ghbtns.com/github-btn.html?user=INN&repo=responsive-tables&type=fork&count=true&size=large"
       allowtransparency="true" frameborder="0" scrolling="0" width="150" height="30"></iframe>
+	<p>This app is <strong>no longer maintained</strong>. If you have used it before February 17, 2018, please <a href="http://blog.apps.npr.org/2018/02/15/pym-security-vulnerability.html">update your graphics</a> to avoid a high-severity security vulnerability from Pym.js. If you use this product regularly and would like us to maintain it, please <a href="mailto:labs@inn.org">let us know</a>.</p>
     <p>This simple app generates a ready-for-deployment, embeddable, responsive version of a Google Spreadsheet from the spreadsheet key and some column formatting information.</p>
     <p>It works best with tables that have 5-7 columns. Make sure you <a href="https://support.google.com/docs/answer/37579">publish your spreadsheet to the web</a> before using this generator.</p>
     <ul id="tab-nav">
@@ -123,7 +124,7 @@
       <p>We're using <a href="http://blog.apps.npr.org/pym.js/">pym.js</a> to make our tables responsive when embedded via <code>&lt;iframe&gt;</code>.</p>
       <p>To embed a table, you can use this snipped to get started:</p>
       <pre><code>&lt;div id="table-iframe-container"&gt;&lt;/div&gt;
-  &lt;script src="http://yourdomain.com/path/to/pym.js"&gt;&lt;/script&gt;
+  &lt;script src="https://pym.nprapps.org/pym.v1.min.js"&gt;&lt;/script&gt;
   &lt;script type="text/javascript"&gt;
   (function() {
     var pymParent = new pym.Parent(
@@ -132,7 +133,7 @@
   }());
   &lt;/script&gt;</code></pre>
 
-      <p>Be sure to replace <code>http://yourdomain.com/path/to/index.html</code> with the actual URL of your table, and to replace <code>http://yourdomain.com/path/to/pym.js</code> with the location of the pym.js file, found in the same directory.</p>
+      <p>Be sure to replace <code>http://yourdomain.com/path/to/index.html</code> with the actual URL of your table.</p>
     </div>
 
     <div id="credits" class="tab">
@@ -161,7 +162,7 @@
 <script src="webapp/lib/js/tabletop.js"></script>
 <script src="webapp/lib/js/bootstrap-transition.js"></script>
 <script src="webapp/lib/js/bootstrap-collapse.js"></script>
-<script src="assets/pym.js"></script>
+<script src="https://pym.nprapps.org/pym.v1.min.js"></script>
 <!-- Mandatory in IE 6, 7, 8 and 9. -->
 <!--[if IE]>
     <script type="text/javascript" src="/webapps/lib/js/jszip-utils-ie.min.js"></script>

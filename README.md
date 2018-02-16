@@ -2,6 +2,8 @@
 
 [Generate responsive tables using the webapp](http://inn.github.io/responsive-tables/)
 
+This project is **not maintained.**
+
 ## What is it?
 
 This repo contains two utilities that do the same thing:
@@ -98,7 +100,7 @@ We're using [pym.js](http://blog.apps.npr.org/pym.js/) to make our tables respon
 To embed a table, you can use this snippet to get started:
 
     <div id="table-iframe-container"></div>
-    <script src="http://yourdomain.com/path/to/pym.js"></script>
+    <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
     <script type="text/javascript">
     (function() {
       var pymParent = new pym.Parent(
@@ -107,7 +109,7 @@ To embed a table, you can use this snippet to get started:
     }());
     </script>
 
-Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table, and to replace `http://yourdomain.com/path/to/pym.js` with the location of the `pym.js` file, found in the same directory.
+Be sure to replace `http://yourdomain.com/path/to/index.html` with the actual URL of your table.
 
 ## Troubleshooting
 

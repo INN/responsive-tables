@@ -41,7 +41,7 @@ var ResponsiveTable;
         self.createTableColumns('#data table');
         self.populateTable(dataSource, '#data table');
         $('#data table').table().fadeIn();
-        self.pym.sendHeightToParent();
+        self.pym.sendHeight();
     };
 
     self.createTableColumns = function(table){
