@@ -43,7 +43,7 @@ Install this repository:
 
 ### Configuration
 
-Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long sequence of apparently-random characters, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0`, found in the URL of the page you use to edit the spreadsheet. An example URL is https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://nerds.investigativenewsnetwork.org/discounts/). The key may include dashes. The key is also included in the URL found in the "Document link" field of the [Publish to web](https://support.google.com/docs/answer/183965/?hl=en&authuser=0) dialog. 
+Copy `config-example.json` to `config.json`. Open `config.json` and add your spreadsheet's key. The key is a long sequence of apparently-random characters, such as `10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0`, found in the URL of the page you use to edit the spreadsheet. An example URL is https://docs.google.com/spreadsheets/d/10yccwbMYeIHdcRQazaNOaHSkpoSa1SUJEtWBfWPsgx0/edit#gid=0, which was used to generate [this embedded example](http://labs.inn.org/discounts/). The key may include dashes. The key is also included in the URL found in the "Document link" field of the [Publish to web](https://support.google.com/docs/answer/183965/?hl=en&authuser=0) dialog. 
 
 Fill in `title` to set the table's title tag.
 
