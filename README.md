@@ -2,7 +2,7 @@
 
 [Generate responsive tables using the webapp](http://inn.github.io/responsive-tables/)
 
-This project is **not maintained.**
+🚨 This project is **not maintained or supported,** as of [February 16, 2018](https://github.com/INN/responsive-tables/commit/5ab7f9673a9431ebbbb471e19fdd4e0787f87b2f). 🚨
 
 ## What is it?
 
